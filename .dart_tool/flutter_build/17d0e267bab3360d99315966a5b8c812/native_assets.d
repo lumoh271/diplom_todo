@@ -1,0 +1,1 @@
+ C:\\Users\\lenovo\\flutter_projects\\diplom_todo\\.dart_tool\\flutter_build\\17d0e267bab3360d99315966a5b8c812\\native_assets.yaml: 
