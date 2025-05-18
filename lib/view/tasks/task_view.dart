@@ -110,11 +110,12 @@ class _TaskViewState extends State<TaskView> {
       try {
         widget.taskControllerForTitle?.text = title;
         widget.taskControllerForSubtitle?.text = subtitle;
-
-        // widget.task?.createdAtDate = date!;
-        // widget.task?.createdAtTime = time!;
-
-        widget.task?.save();
+        if (widget.task != null) {
+          widget.task!.priority = _selectedPriority;
+          // widget.task?.createdAtDate = date!;
+          // widget.task?.createdAtTime = time!;
+          widget.task!.save();
+        }
         Navigator.of(context).pop();
       } catch (error) {
         nothingEnterOnUpdateTaskMode(context);
