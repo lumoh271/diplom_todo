@@ -86,15 +86,24 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Hive Todo App',
       theme: themeNotifier.isDarkMode ? _buildDarkTheme() : _buildLightTheme(),
-      home: FutureBuilder<bool>(
-        future: _checkFirstLaunch(),
+      home: FutureBuilder<Map<String, dynamic>>(
+        future: _checkRememberMe(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return const Center(child: Text('Error loading app'));
             }
-            final hasUsers = snapshot.data ?? false;
-            return hasUsers ? const LoginView() : const RegisterView();
+            final rememberMe = snapshot.data?['rememberMe'] ?? false;
+            final hasUsers = snapshot.data?['hasUsers'] ?? false;
+            if (hasUsers) {
+              if (rememberMe) {
+                return const HomeView();
+              } else {
+                return const LoginView();
+              }
+            } else {
+              return const RegisterView();
+            }
           }
           return const Scaffold(
               body: Center(child: CircularProgressIndicator()));
@@ -103,12 +112,15 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Future<bool> _checkFirstLaunch() async {
+  Future<Map<String, dynamic>> _checkRememberMe() async {
     try {
       final box = Hive.box<User>('usersBox');
-      return box.isNotEmpty;
+      final rememberMeBox = Hive.box('rememberMeBox');
+      final hasUsers = box.isNotEmpty;
+      final rememberMe = rememberMeBox.get('rememberMe', defaultValue: false);
+      return {'hasUsers': hasUsers, 'rememberMe': rememberMe};
     } catch (e) {
-      return false;
+      return {'hasUsers': false, 'rememberMe': false};
     }
   }
 }
