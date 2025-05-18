@@ -159,7 +159,8 @@ class _LoginViewState extends State<LoginView> {
 
       if (isValid) {
         await BaseWidget.of(context).dataStore.saveRememberMe(_rememberMe, username);
-
+        final user = BaseWidget.of(context).dataStore.getUserByUsername(username);
+        BaseWidget.of(context).currentUser = user;
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const HomeView()),
