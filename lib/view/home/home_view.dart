@@ -267,6 +267,68 @@ class _HomeViewState extends State<HomeView> {
       );
     });
   }
+
+  Widget _buildProgressBar(BuildContext context, TextTheme textTheme) {
+    var colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      margin: const EdgeInsets.fromLTRB(35, 0, 0, 0),
+      width: double.infinity,
+      height: 100,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 60,
+            height: 60,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: colorScheme.surface,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                CustomPaint(
+                  size: Size(60, 60),
+                  painter: _TasksProgressPainter(
+                    progress: checkDoneTask(BaseWidget.of(context).dataStore.taskBox.values.toList()) / 
+                            valueOfTheIndicator(BaseWidget.of(context).dataStore.taskBox.values.toList()),
+                    backgroundColor: colorScheme.surface,
+                    progressColor: colorScheme.primary,
+                  ),
+                ),
+                Text(
+                  '${((checkDoneTask(BaseWidget.of(context).dataStore.taskBox.values.toList()) / 
+                          valueOfTheIndicator(BaseWidget.of(context).dataStore.taskBox.values.toList())) * 100).toStringAsFixed(0)}%',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 35),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(MyString.mainTitle, style: textTheme.displayLarge),
+              const SizedBox(height: 3),
+              Text(
+                "${checkDoneTask(BaseWidget.of(context).dataStore.taskBox.values.toList())} of ${BaseWidget.of(context).dataStore.taskBox.values.length} task",
+                style: textTheme.titleMedium,
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
 }
 
 ///Custom Progress Indicator

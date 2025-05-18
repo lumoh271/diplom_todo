@@ -28,11 +28,12 @@ class _RegisterViewState extends State<RegisterView> {
       backgroundColor: colorScheme.background,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back, color: colorScheme.onBackground),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
+        backgroundColor: colorScheme.surface,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(
@@ -53,10 +54,10 @@ class _RegisterViewState extends State<RegisterView> {
               const SizedBox(height: 20),
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Name (optional)',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    borderRadius: BorderRadius.all(Radius.circular(20))
                   ),
                   labelStyle: TextStyle(color: colorScheme.onBackground),
                 ),

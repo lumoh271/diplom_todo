@@ -185,6 +185,7 @@ class _TaskViewState extends State<TaskView> {
 
   /// All Bottom Buttons
   Padding _buildBottomButtons(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: Row(
@@ -200,9 +201,9 @@ class _TaskViewState extends State<TaskView> {
                   width: 150,
                   height: 55,
                   decoration: BoxDecoration(
-                      border:
-                          Border.all(color: MyColors.primaryColor, width: 2),
-                      borderRadius: BorderRadius.circular(15)),
+                    border: Border.all(color: colorScheme.primary, width: 2),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   child: MaterialButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -213,20 +214,18 @@ class _TaskViewState extends State<TaskView> {
                       deleteTask();
                       Navigator.pop(context);
                     },
-                    color: Colors.white,
-                    child: const Row(
+                    color: colorScheme.surface,
+                    child: Row(
                       children: [
                         Icon(
                           Icons.close,
-                          color: MyColors.primaryColor,
+                          color: colorScheme.primary,
                         ),
-                        SizedBox(
-                          width: 5,
-                        ),
+                        const SizedBox(width: 5),
                         Text(
                           MyString.deleteTask,
                           style: TextStyle(
-                            color: MyColors.primaryColor,
+                            color: colorScheme.primary,
                           ),
                         ),
                       ],
@@ -244,13 +243,13 @@ class _TaskViewState extends State<TaskView> {
             onPressed: () {
               isTaskAlreadyExistUpdateTask();
             },
-            color: MyColors.primaryColor,
+            color: colorScheme.primary,
             child: Text(
               isTaskAlreadyExistBool()
                   ? MyString.addTaskString
                   : MyString.updateTaskString,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: colorScheme.onPrimary,
               ),
             ),
           ),

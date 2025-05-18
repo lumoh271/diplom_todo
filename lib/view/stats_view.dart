@@ -24,13 +24,15 @@ class StatsView extends StatelessWidget {
       backgroundColor: colorScheme.background,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              size: 35,
-            )),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            size: 35,
+            color: colorScheme.onBackground,
+          ),
+        ),
         centerTitle: true,
         title: Text('Statistics', style: TextStyle(color: colorScheme.onBackground)),
         backgroundColor: colorScheme.surface,
@@ -54,6 +56,7 @@ class StatsView extends StatelessWidget {
   }
 
   Widget _buildBarChart(List<CategoryStats> stats) {
+    var colorScheme = Theme.of(context).colorScheme;
     return BarChart(
       BarChartData(
         alignment: BarChartAlignment.spaceAround,
@@ -70,7 +73,7 @@ class StatsView extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Text(
                       stats[index].categoryName,
-                      style: const TextStyle(fontSize: 10),
+                      style: TextStyle(fontSize: 10, color: colorScheme.onBackground),
                     ),
                   );
                 }
@@ -82,7 +85,10 @@ class StatsView extends StatelessWidget {
             sideTitles: SideTitles(
               showTitles: true,
               getTitlesWidget: (value, meta) {
-                return Text('${(value * 100).toInt()}%');
+                return Text(
+                  '${(value * 100).toInt()}%',
+                  style: TextStyle(color: colorScheme.onBackground),
+                );
               },
               reservedSize: 40,
             ),
@@ -97,7 +103,7 @@ class StatsView extends StatelessWidget {
             barRods: [
               BarChartRodData(
                 toY: stat.completionRate,
-                color: Priority.getColor(index + 1), // Или цвет категории
+                color: Priority.getColor(index + 1),
                 width: 16,
                 borderRadius: BorderRadius.circular(4),
               ),
@@ -110,21 +116,25 @@ class StatsView extends StatelessWidget {
   }
 
   Widget _buildStatsList(List<CategoryStats> stats) {
+    var colorScheme = Theme.of(context).colorScheme;
     return ListView.builder(
       itemCount: stats.length,
       itemBuilder: (context, index) {
         final stat = stats[index];
         return Card(
           margin: const EdgeInsets.symmetric(vertical: 4),
+          color: colorScheme.surface,
           child: ListTile(
             leading: CircularProgressIndicator(
               value: stat.completionRate,
-              backgroundColor: Colors.grey[200],
+              backgroundColor: colorScheme.surface,
               color: Priority.getColor(index + 1),
             ),
-            title: Text(stat.categoryName),
-            subtitle:
-                Text('${stat.completedTasks} из ${stat.totalTasks} задач'),
+            title: Text(stat.categoryName, style: TextStyle(color: colorScheme.onBackground)),
+            subtitle: Text(
+              '${stat.completedTasks} из ${stat.totalTasks} задач',
+              style: TextStyle(color: colorScheme.onBackground.withOpacity(0.7)),
+            ),
             trailing: Text(
               '${(stat.completionRate * 100).toStringAsFixed(1)}%',
               style: TextStyle(
