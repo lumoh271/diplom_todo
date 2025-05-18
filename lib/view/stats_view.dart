@@ -14,12 +14,14 @@ class StatsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
     final taskBox = BaseWidget.of(context).dataStore.taskBox;
     final categories =
         Provider.of<CategoryRepository>(context).getAllCategories();
     final stats = StatsRepository.getCategoryStats(taskBox, categories);
 
     return Scaffold(
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -30,7 +32,8 @@ class StatsView extends StatelessWidget {
               size: 35,
             )),
         centerTitle: true,
-        title: const Text('Statistics'),
+        title: Text('Statistics', style: TextStyle(color: colorScheme.onBackground)),
+        backgroundColor: colorScheme.surface,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

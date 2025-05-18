@@ -23,8 +23,9 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -45,9 +46,9 @@ class _RegisterViewState extends State<RegisterView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Signup',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              Text(
+                'Register',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: colorScheme.onBackground),
               ),
               const SizedBox(height: 20),
               TextFormField(
@@ -57,20 +58,22 @@ class _RegisterViewState extends State<RegisterView> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20))
                   ),
+                  labelStyle: TextStyle(color: colorScheme.onBackground),
                 ),
               ),
               const SizedBox(height: 20),
               TextFormField(
                 controller: _usernameController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Username',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
+                  labelStyle: TextStyle(color: colorScheme.onBackground),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter a username';
+                    return 'Please enter your username';
                   }
                   if (value.length < 4) {
                     return 'Username must be at least 4 characters';
@@ -82,15 +85,16 @@ class _RegisterViewState extends State<RegisterView> {
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
+                  labelStyle: TextStyle(color: colorScheme.onBackground),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter a password';
+                    return 'Please enter your password';
                   }
                   if (value.length < 6) {
                     return 'Password must be at least 6 characters';
@@ -102,13 +106,17 @@ class _RegisterViewState extends State<RegisterView> {
               TextFormField(
                 controller: _confirmPasswordController,
                 obscureText: true,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Confirm Password',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
+                  labelStyle: TextStyle(color: colorScheme.onBackground),
                 ),
                 validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please confirm your password';
+                  }
                   if (value != _passwordController.text) {
                     return 'Passwords do not match';
                   }
@@ -119,14 +127,27 @@ class _RegisterViewState extends State<RegisterView> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(200, 50),
-                  backgroundColor: MyColors.primaryColor,
+                  backgroundColor: colorScheme.primary,
                 ),
                 onPressed: _register,
-                child: const Text(
-                  'Signup',
+                child: Text(
+                  'Sign Up',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: colorScheme.onPrimary,
                     fontSize: 20,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Already have an account? Sign In😊',
+                  style: TextStyle(
+                    color: colorScheme.primary,
+                    fontSize: 15,
                   ),
                 ),
               ),

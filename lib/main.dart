@@ -139,7 +139,13 @@ ThemeData _buildLightTheme() {
       titleSmall: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
       titleLarge: TextStyle(fontSize: 40, color: Colors.black, fontWeight: FontWeight.w300),
     ),
-    colorScheme: ColorScheme.light(primary: const Color(0xff4568dc)),
+    colorScheme: ColorScheme.light(
+      primary: const Color(0xff4568dc),
+      surface: Colors.white,
+      background: Colors.white,
+      onSurface: Colors.black,
+      onBackground: Colors.black,
+    ),
   );
 }
 
@@ -161,6 +167,9 @@ ThemeData _buildDarkTheme() {
     colorScheme: lightTheme.colorScheme.copyWith(
       primary: const Color(0xff4568dc),
       surface: const Color(0xFF121212),
+      background: const Color(0xFF121212),
+      onSurface: Colors.white,
+      onBackground: Colors.white,
     ),
   );
 }

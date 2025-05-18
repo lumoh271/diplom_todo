@@ -146,12 +146,13 @@ class _TaskViewState extends State<TaskView> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var colorScheme = Theme.of(context).colorScheme;
     return Consumer<ThemeNotifier>(
       builder: (context, themeNotifier, child) {
         return GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: Scaffold(
-            backgroundColor: themeNotifier.backgroundColor, // Динамический цвет фона
+            backgroundColor: colorScheme.background,
             appBar: const MyAppBar(),
             body: SizedBox(
               width: double.infinity,

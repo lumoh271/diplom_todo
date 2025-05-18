@@ -56,52 +56,36 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final base = BaseWidget.of(context);
     var textTheme = Theme.of(context).textTheme;
-
-    return ValueListenableBuilder(
-        valueListenable: base.dataStore.listenToTask(),
-        builder: (ctx, Box<Task> box, Widget? child) {
-          var tasks = _selectedCategoryId != null
-              ? base.dataStore.getTasksByCategory(_selectedCategoryId!)
-              : box.values.toList();
-
-          /// Sort Task List
-          tasks.sort((a, b) {
-            if (a.priority != b.priority) {
-              return a.priority.compareTo(b.priority);
-            }
-            return a.createdAtDate.compareTo(b.createdAtDate);
-          });
-          return Scaffold(
-            backgroundColor: Colors.white,
-
-            /// Floating Action Button
-            floatingActionButton: const FAB(),
-
-            /// Body
-            body: SliderDrawer(
-              isDraggable: false,
-              key: dKey,
-              animationDuration: 400,
-
-              /// My AppBar
-              appBar: MyAppBar(
-                drawerKey: dKey,
-              ),
-
-              /// My Drawer Slider
-              slider: MySlider(),
-
-              /// Main Body
-              child: _buildBody(
-                tasks,
-                base,
-                textTheme,
+    var colorScheme = Theme.of(context).colorScheme;
+    return Consumer<ThemeNotifier>(
+      builder: (context, themeNotifier, child) {
+        return Scaffold(
+          backgroundColor: colorScheme.background,
+          appBar: MyAppBar(drawerKey: dKey),
+          body: SliderDrawer(
+            appBar: SliderAppBar(
+              appBarColor: colorScheme.surface,
+              title: Text(MyString.mainTitle, style: textTheme.displayLarge),
+              trailing: Text(MyString.subTitle, style: textTheme.titleMedium),
+            ),
+            slider: MyDrawer(drawerKey: dKey),
+            sliderOpenSize: 250,
+            key: dKey,
+            child: Container(
+              color: colorScheme.background,
+              child: Column(
+                children: [
+                  _buildProgressBar(context, textTheme),
+                  _buildTaskList(context, textTheme),
+                ],
               ),
             ),
-          );
-        });
+          ),
+          floatingActionButton: const FAB(),
+        );
+      },
+    );
   }
 
   /// Main Body

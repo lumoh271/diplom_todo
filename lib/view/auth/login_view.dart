@@ -39,8 +39,9 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.background,
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(
@@ -52,17 +53,19 @@ class _LoginViewState extends State<LoginView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Login',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: colorScheme.onBackground),
                 ),
                 const SizedBox(height: 30),
                 TextFormField(
                   controller: _usernameController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Username',
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    labelStyle: TextStyle(color: colorScheme.onBackground),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -75,10 +78,12 @@ class _LoginViewState extends State<LoginView> {
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Password',
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    labelStyle: TextStyle(color: colorScheme.onBackground),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -91,7 +96,7 @@ class _LoginViewState extends State<LoginView> {
                 Row(
                   children: [
                     Checkbox(
-                      activeColor: MyColors.primaryColor,
+                      activeColor: colorScheme.primary,
                       value: _rememberMe,
                       onChanged: (value) {
                         setState(() {
@@ -99,10 +104,10 @@ class _LoginViewState extends State<LoginView> {
                         });
                       },
                     ),
-                    const Text(
+                    Text(
                       'Remember me',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: colorScheme.onBackground,
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
                       ),
@@ -113,13 +118,13 @@ class _LoginViewState extends State<LoginView> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(200, 50),
-                    backgroundColor: MyColors.primaryColor,
+                    backgroundColor: colorScheme.primary,
                   ),
                   onPressed: _login,
-                  child: const Text(
+                  child: Text(
                     'Sign in',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: colorScheme.onPrimary,
                       fontSize: 20,
                     ),
                   ),
@@ -134,10 +139,10 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     );
                   },
-                  child: const Text(
+                  child: Text(
                     "Don't have an account?  Sign Up😇",
                     style: TextStyle(
-                      color: MyColors.primaryColor,
+                      color: colorScheme.primary,
                       fontSize: 15,
                     ),
                   ),
